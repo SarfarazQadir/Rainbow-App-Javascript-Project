@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Rainbow Drawing</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+    }
+    .container {
+        text-align: center;
+    }
+    canvas {
+        border: 2px solid #333;
+        margin-top: 20px;
+    }
+    .color-picker {
+        margin-top: 20px;
+    }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    
+<div class="container">
+    <h1 class="bg-warning">Rainbow Drawing</h1>
+    <canvas id="rainbowCanvas" width="500" height="300"></canvas>
+    <div class="color-picker">
+        <input type="color" id="color1">
+        <input type="color" id="color2">
+        <input type="color" id="color3">
+        <input type="color" id="color4">
+        <input type="color" id="color5">
+        <input type="color" id="color6">
+        <input type="color" id="color7">
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('rainbowCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const colorPickers = document.querySelectorAll('.color-picker input');
+
+    colorPickers.forEach((picker, index) => {
+        picker.addEventListener('change', () => {
+            drawRainbow();
+        });
+    });
+
+    function drawRainbow() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const colors = Array.from(colorPickers).map(picker => picker.value);
+
+        const radius = Math.min(canvas.width, canvas.height) / 2;
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height;
+
+        for (let i = 0; i < colors.length; i++) {
+            ctx.beginPath();
+            ctx.fillStyle = colors[i];
+            ctx.arc(centerX, centerY, radius - i * (radius / colors.length), Math.PI, 0, false);
+            ctx.fill();
+        }
+    }
+
+    // Initial drawing
+    drawRainbow();
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
